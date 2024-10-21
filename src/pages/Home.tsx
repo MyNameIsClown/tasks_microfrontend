@@ -2,11 +2,13 @@ import { TaskCardComponent } from '../components/TaskCardComponent'
 import { TaskDTO } from '../Dto/TaskDTO'
 import { getTasks, createTask, deleteTask } from '../services/TasksService'
 import { useState, useEffect } from 'react'
+import { TasksStatusModal } from './modals/TasksStatusModal'
 
 function Home() {
     const [tasks, setTasks] = useState<TaskDTO[]>([]);
     const [taskDeleted, setTaskDeleted] = useState<TaskDTO | null>(null);
     const [taskCreated, setTaskCreated] = useState<TaskDTO | null>(null);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
 
     useEffect(() => {
         const fetchTasks = async () => {
@@ -41,6 +43,8 @@ function Home() {
                 <input type="text" name="description" placeholder="Description" />
                 <button type="submit">Create Task</button>
             </form>
+            <button onClick={() => setModalIsOpen(true)}>Open Modal</button>
+            <TasksStatusModal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)} />
         </div>
     )
 }
