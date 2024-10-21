@@ -5,6 +5,8 @@ import { useState, useEffect } from 'react'
 
 function Home() {
     const [tasks, setTasks] = useState<TaskDTO[]>([]);
+    const [taskDeleted, setTaskDeleted] = useState<TaskDTO | null>(null);
+    const [taskCreated, setTaskCreated] = useState<TaskDTO | null>(null);
 
     useEffect(() => {
         const fetchTasks = async () => {
@@ -12,10 +14,12 @@ function Home() {
         };
 
         fetchTasks();
-    }, []);
+    }, [taskDeleted, taskCreated]);
 
     const handleDelete = async (task: TaskDTO) => {
+        console.log(task)
         await deleteTask(task)
+        setTaskDeleted(task)
     }
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -25,12 +29,12 @@ function Home() {
         const description = formData.get('description')
         const task = new TaskDTO(0, title as string, description as string, "new", new Date(), new Date())
         await createTask(task)
-        setTasks([...tasks, task])
+        setTaskCreated(task)
     }
     return (
-        <div>
+        <div className="task-container">
             {tasks.map((task) => (
-                <TaskCardComponent key={task.id} {...task} handleDelete={handleDelete(task)} />
+                <TaskCardComponent key={task.id} task={task} handleDelete={() => handleDelete(task)} />
             ))}
             <form onSubmit={handleSubmit}>
                 <input type="text" name="title" placeholder="Title" />

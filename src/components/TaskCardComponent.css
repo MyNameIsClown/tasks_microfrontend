@@ -1,0 +1,36 @@
+.task-card {
+  display: flex; /* Agregado para hacer que el componente sea un contenedor flex */
+  flex-direction: column; /* Asegura que los elementos se apilen verticalmente */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.task-title {
+  color: #333;
+}
+
+.task-description {
+  color: #666;
+}
+
+.task-status {
+  font-weight: bold;
+}
+
+.delete-button {
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.task-container {
+  display: grid; /* Cambiado a grid para apilar las tarjetas */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Ajusta el tamaño de las columnas */
+  gap: 16px; /* Espacio entre las tarjetas */
+}
