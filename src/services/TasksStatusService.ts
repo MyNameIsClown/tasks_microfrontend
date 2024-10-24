@@ -4,7 +4,7 @@ import { TaskStatusDTO } from '../Dto/TaskStatusDTO'
 export const getStatus = async () => {
     const response = await axiosInstance.get('/tasks_status/')
     const fetchedTasks = response.data.map((status: any) => 
-        new TaskStatusDTO(status.id, status.title, status.description, new Date(status.created_at), new Date(status.updated_at))
+        new TaskStatusDTO(status.id, status.name, status.description, new Date(status.created_at), new Date(status.updated_at))
     );
     return fetchedTasks
 }

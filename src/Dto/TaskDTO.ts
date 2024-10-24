@@ -2,7 +2,7 @@ class TaskDTO {
   id: number;
   titulo: string;
   descripcion: string;
-  estado: string;
+  estado: number; 
   fechaCreacion: Date;
   fechaActualizacion: Date;
 
@@ -10,7 +10,7 @@ class TaskDTO {
     id: number,
     titulo: string,
     descripcion: string,
-    estado: string,
+    estado: number,
     fechaCreacion: Date,
     fechaActualizacion: Date
   ) {
