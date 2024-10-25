@@ -1,9 +1,9 @@
-import { TaskDTO } from '../Dto/TaskDTO'
-import { TaskStatusSelector } from './selectors/TaskStausSelector';
+import { TaskDTO } from '../../Dto/TaskDTO'
+import { TaskStatusSelector } from '../selectors/TaskStausSelector';
 import Card from '@mui/material/Card';
 import { DateTimePicker  } from '@mui/x-date-pickers/DateTimePicker';
 import CardContent from '@mui/material/CardContent';
-import { Button, Container, TextField} from '@mui/material';
+import { Button, TextField} from '@mui/material';
 import { FaTrashAlt } from "react-icons/fa";
 import dayjs from 'dayjs';
 import './TaskCardComponent.css';
