@@ -2,7 +2,7 @@ import { TaskDTO } from "../../Dto/TaskDTO";
 import { createTask } from "../../services/TasksService";
 import { ModalCore } from './core/ModalCore';
 import { TaskStatusSelector } from "../../components/selectors/TaskStausSelector";
-import { FormControl, Button, TextField } from "@mui/material";
+import { Button, TextField} from "@mui/material";
 
 export const TasksCreationModal = ({ onClose, setTaskCreated }: { onClose: () => void, setTaskCreated: (task: TaskDTO) => void }) => {
 

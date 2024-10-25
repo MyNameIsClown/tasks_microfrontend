@@ -13,5 +13,11 @@
     padding: 20px;
     width: 50%;
     height: 50%;
+    border-radius: 10px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: flex-end;
 }
 
