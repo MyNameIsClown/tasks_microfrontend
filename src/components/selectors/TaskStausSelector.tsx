@@ -2,8 +2,9 @@
 import { TaskStatusDTO } from "../../Dto/TaskStatusDTO";
 import { getStatus } from "../../services/TasksStatusService";
 import { useEffect, useState } from "react";
+import { FormControl, Select, MenuItem, InputLabel } from "@mui/material";
 
-export const TaskStatusSelector = ({ name, disabled, selectedStatus }: { name?: string, disabled?: boolean, selectedStatus?: number }) => {
+export const TaskStatusSelector = ({ name, disabled, selectedStatus, required, margin, fullWidth }: { name?: string, disabled?: boolean, selectedStatus?: number, required?: boolean, margin?: "none" | "dense" | "normal", fullWidth?: boolean }) => {
     const [status, setStatus] = useState<TaskStatusDTO[]>([]);
 
     useEffect(() => {
@@ -15,10 +16,13 @@ export const TaskStatusSelector = ({ name, disabled, selectedStatus }: { name?: 
     }, []);
 
     return (
-        <select name={name} disabled={disabled} value={selectedStatus}>
-            {status.map((status) => (
-                <option key={status.id} value={status.id}>{status.titulo}</option>
-            ))}
-        </select>
+        <FormControl fullWidth={fullWidth} margin={margin} required={required}>
+            <InputLabel id="status-label">{name}</InputLabel>
+            <Select labelId="status-label" name={name} disabled={disabled} value={selectedStatus}>
+                {status.map((status) => (
+                    <MenuItem key={status.id} value={status.id}>{status.titulo}</MenuItem>
+                ))}
+            </Select>
+        </FormControl>
     )
 }

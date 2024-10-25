@@ -2,6 +2,7 @@ import { TaskDTO } from "../../Dto/TaskDTO";
 import { createTask } from "../../services/TasksService";
 import { ModalCore } from './core/ModalCore';
 import { TaskStatusSelector } from "../../components/selectors/TaskStausSelector";
+import { FormControl, Button, TextField } from "@mui/material";
 
 export const TasksCreationModal = ({ onClose, setTaskCreated }: { onClose: () => void, setTaskCreated: (task: TaskDTO) => void }) => {
 
@@ -21,10 +22,29 @@ export const TasksCreationModal = ({ onClose, setTaskCreated }: { onClose: () =>
     return (
         <ModalCore onClose={onClose}>
             <form onSubmit={handleSubmit}>
-                <input type="text" name="title" placeholder="Title" />
-                <input type="text" name="description" placeholder="Description" />
-                <TaskStatusSelector name="status" />
-                <button type="submit">Create Task</button>
+                <TextField
+                    fullWidth
+                    required
+                    name="title"
+                    label="Title"
+                    margin="normal"
+                />
+                <TextField
+                    fullWidth
+                    required
+                    name="description"
+                    label="Description"
+                    margin="normal"
+                    multiline
+                    rows={4}
+                />
+                <TaskStatusSelector
+                    fullWidth
+                    required
+                    name="status" 
+                    margin="normal"
+                />
+                <Button type="submit" variant="contained" color="primary">Create Task</Button>
             </form>
         </ModalCore>
     )
