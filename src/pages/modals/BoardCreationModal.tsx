@@ -1,22 +1,19 @@
-import { TaskDTO } from "../../Dto/TaskDTO";
-import { createTask } from "../../services/TasksService";
 import { ModalCore } from './core/ModalCore';
-import { TaskStatusSelector } from "../../components/selectors/TaskStausSelector";
 import { Button, TextField} from "@mui/material";
+import { BoardDTO } from "../../Dto/BoardDTO";
+import { createBoard } from "../../services/BoardsService";
 
-export const TasksCreationModal = ({ onClose, setTaskCreated, boardId }: { onClose: () => void, setTaskCreated: (task: TaskDTO) => void, boardId: number }) => {
+export const BoardCreationModal = ({ onClose, setBoardCreated }: { onClose: () => void, setBoardCreated: (board: BoardDTO) => void }) => {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         const formData = new FormData(event.target as HTMLFormElement)
-        const task = await createTask(
+        const board = await createBoard(
             formData.get('title') as string,
-            formData.get('description') as string,
-            formData.get('status') as unknown as number,
-            boardId
+            formData.get('description') as string
         )
-        console.log(task)
-        setTaskCreated(task)
+        console.log(board)
+        setBoardCreated(board)
         onClose()
     }
 
@@ -38,13 +35,7 @@ export const TasksCreationModal = ({ onClose, setTaskCreated, boardId }: { onClo
                     multiline
                     rows={4}
                 />
-                <TaskStatusSelector
-                    fullWidth
-                    required
-                    name="status" 
-                    margin="normal"
-                />
-                <Button type="submit" variant="contained" color="primary">Create Task</Button>
+                <Button type="submit" variant="contained" color="primary">Create Board</Button>
             </form>
         </ModalCore>
     )

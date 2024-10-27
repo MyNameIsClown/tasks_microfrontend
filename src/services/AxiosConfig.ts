@@ -17,4 +17,20 @@ axiosInstance.interceptors.response.use(
     }
 );
 
+axiosInstance.interceptors.request.use(
+    (config) => {
+        if (config.method === 'get' && config.params) {
+            const filteredParams = Object.fromEntries(
+                Object.entries(config.params).filter(([_, value]) => value !== null && value !== undefined)
+            );
+            config.params = filteredParams;
+        }
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
+
+
 export default axiosInstance;
