@@ -3,8 +3,9 @@ import { createTask } from "../../services/TasksService";
 import { ModalCore } from './core/ModalCore';
 import { TaskStatusSelector } from "../../components/selectors/TaskStausSelector";
 import { Button, TextField} from "@mui/material";
+import { TaskStatusDTO } from "../../Dto/TaskStatusDTO";
 
-export const TasksCreationModal = ({ onClose, setTaskCreated, boardId }: { onClose: () => void, setTaskCreated: (task: TaskDTO) => void, boardId: number }) => {
+export const TasksCreationModal = ({ onClose, setTaskCreated, boardId, status }: { onClose: () => void, setTaskCreated: (task: TaskDTO) => void, boardId: number, status: TaskStatusDTO }) => {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -12,7 +13,7 @@ export const TasksCreationModal = ({ onClose, setTaskCreated, boardId }: { onClo
         const task = await createTask(
             formData.get('title') as string,
             formData.get('description') as string,
-            formData.get('status') as unknown as number,
+            status.id,
             boardId
         )
         console.log(task)
@@ -37,12 +38,6 @@ export const TasksCreationModal = ({ onClose, setTaskCreated, boardId }: { onClo
                     margin="normal"
                     multiline
                     rows={4}
-                />
-                <TaskStatusSelector
-                    fullWidth
-                    required
-                    name="status" 
-                    margin="normal"
                 />
                 <Button type="submit" variant="contained" color="primary">Create Task</Button>
             </form>

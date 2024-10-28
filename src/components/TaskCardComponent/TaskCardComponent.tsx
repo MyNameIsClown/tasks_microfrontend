@@ -9,17 +9,12 @@ import dayjs from 'dayjs';
 import './TaskCardComponent.css';
 
 function TaskCardComponent({task, handleDelete}: {task: TaskDTO, handleDelete: () => void}) {
-  const fechaCreacion = dayjs(task.fechaCreacion);
-  const fechaActualizacion = dayjs(task.fechaActualizacion);
 
   return (
     <Card className="task-card">
         <CardContent className="task-card-content">
           <h1 className="task-title">{task.titulo}</h1>
           <TextField label="Descripción" value={task.descripcion} disabled={true} fullWidth={true} multiline rows={4}/>
-          <TaskStatusSelector selectedStatus={task.estado} disabled={true} fullWidth={true}/>
-          <DateTimePicker label="Fecha de creación" disabled={true} value={fechaCreacion}/>
-          <DateTimePicker label="Fecha de actualización" disabled={true} value={fechaActualizacion}/>
           <Button 
             onClick={handleDelete} 
             className="delete-button"
