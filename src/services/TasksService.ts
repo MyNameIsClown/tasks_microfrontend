@@ -12,7 +12,7 @@ export const getTasks = async (boardId: number) => {
 export const createTask = async (titulo: string, descripcion: string, estado: number, boardId: number) => {
     const response = await axiosInstance.post('/tasks/', 
         {
-            title: titulo,
+            name: titulo,
             description: descripcion,
             status: estado,
             board: boardId

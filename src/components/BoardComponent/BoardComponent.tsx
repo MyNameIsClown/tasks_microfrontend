@@ -11,6 +11,7 @@ import { BoardStatusDTO } from '../../Dto/BoardStatusDTO'
 import './BoardComponent.css'
 import ConfirmDeleteModal from '../../pages/modals/core/ConfirmDeleteModal/ConfirmDeleteModal'
 import { deleteBoard } from '../../services/BoardsService'
+import { BoardConfigModal } from '../../pages/modals/BoardConfigModal/BoardConfigModal'
 
 export function BoardComponent({ board, setBoardDeleted }: { board: BoardDTO | null, setBoardDeleted: (board: BoardDTO) => void }) {
 
@@ -74,6 +75,14 @@ export function BoardComponent({ board, setBoardDeleted }: { board: BoardDTO | n
                 <ConfirmDeleteModal 
                     onClose={() => setConfirmDeleteModalIsOpen(false)}
                     onConfirm={() => handleDeleteBoard()}
+                />
+            }
+            {
+                boardStatusModalIsOpen 
+                && 
+                <BoardConfigModal 
+                    onClose={() => setBoardStatusModalIsOpen(false)}
+                    board={board!}
                 />
             }
             {
