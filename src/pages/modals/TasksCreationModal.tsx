@@ -1,11 +1,23 @@
 import { TaskDTO } from "../../Dto/TaskDTO";
 import { createTask } from "../../services/TasksService";
 import { ModalCore } from './core/ModalCore';
-import { TaskStatusSelector } from "../../components/selectors/TaskStausSelector";
 import { Button, TextField} from "@mui/material";
-import { TaskStatusDTO } from "../../Dto/TaskStatusDTO";
+import { BoardStatusDTO } from "../../Dto/BoardStatusDTO";
 
-export const TasksCreationModal = ({ onClose, setTaskCreated, boardId, status }: { onClose: () => void, setTaskCreated: (task: TaskDTO) => void, boardId: number, status: TaskStatusDTO }) => {
+export const TasksCreationModal = (
+    { 
+        onClose, 
+        setTaskCreated, 
+        boardId, 
+        status
+    }: 
+    { 
+        onClose: () => void, 
+        setTaskCreated: (task: TaskDTO) => void, 
+        boardId: number, 
+        status: BoardStatusDTO 
+    }
+) => {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()

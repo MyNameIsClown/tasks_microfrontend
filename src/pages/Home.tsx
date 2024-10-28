@@ -11,11 +11,17 @@ function Home() {
     // Inicializar con null explícitamente
     const [selectedBoard, setSelectedBoard] = useState<BoardDTO | null>(null);
     const [statusModalIsOpen, setStatusModalIsOpen] = useState(false);
+    const [boardDeleted, setBoardDeleted] = useState<BoardDTO | null>(null);
     
     // Asegurarse de que handleBoardChange siempre reciba un valor definido
     const handleBoardChange = (board: BoardDTO | null) => {
         setSelectedBoard(board);
     };
+
+    const handleBoardDelete = (board: BoardDTO) => {
+        setBoardDeleted(board)
+        setSelectedBoard(null)
+    }
 
     return (
         <Container>
@@ -29,8 +35,9 @@ function Home() {
             <BoardSelector 
                 handleBoardChange={handleBoardChange}
                 selectedBoard={selectedBoard} // Pasar el valor seleccionado actual
+                boardDeleted={boardDeleted}
             />
-            { selectedBoard && <BoardComponent board={selectedBoard}/> }
+            { selectedBoard && <BoardComponent board={selectedBoard} setBoardDeleted={handleBoardDelete}/> }
             { statusModalIsOpen && <TasksStatusModal onClose={() => setStatusModalIsOpen(false)} />}
         </Container>
     )

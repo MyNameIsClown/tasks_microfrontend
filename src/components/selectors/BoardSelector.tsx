@@ -11,13 +11,15 @@ export const BoardSelector = ({
     selectedBoard, // Nueva prop
     fullWidth, 
     margin, 
-    required 
+    required,
+    boardDeleted
 }: { 
     handleBoardChange: (board: BoardDTO | null) => void, 
     selectedBoard: BoardDTO | null,
     fullWidth?: boolean, 
     margin?: "none" | "dense" | "normal", 
-    required?: boolean 
+    required?: boolean,
+    boardDeleted: BoardDTO | null
 }) => {
     const [boards, setBoards] = useState<BoardDTO[]>([]);
     const [boardCreationModalIsOpen, setBoardCreationModalIsOpen] = useState(false);
@@ -29,7 +31,7 @@ export const BoardSelector = ({
         };
 
         fetchBoards();
-    }, []);
+    }, [boardDeleted]);
 
     const handleBoardSelect = (event: any) => {
         const board = boards.find((board) => board.id === event.target.value)

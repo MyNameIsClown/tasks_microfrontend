@@ -1,4 +1,4 @@
-class TaskStatusDTO {
+class BoardStatusDTO {
   id: number;
   titulo: string;
   descripcion: string;
@@ -20,4 +20,4 @@ class TaskStatusDTO {
   }
 }
 
-export { TaskStatusDTO };
+export { BoardStatusDTO };

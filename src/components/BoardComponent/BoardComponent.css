@@ -4,6 +4,19 @@
     padding: 20px;
 }
 
+.board-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.board-header-buttons{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
 .kanban-board{
     display: flex;
     flex-direction: row;

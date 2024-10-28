@@ -3,29 +3,33 @@ import { TasksCreationModal } from '../../pages/modals/TasksCreationModal'
 import { TaskDTO } from '../../Dto/TaskDTO'
 import { useState, useEffect } from 'react'
 import { getTasks, deleteTask } from '../../services/TasksService'
-import { getStatus } from '../../services/TasksStatusService'
+import { getBoardStatus } from '../../services/BoardStatusService'
 import { Container, Grid2, Button } from '@mui/material'
-import { FaPlus } from 'react-icons/fa'
+import { FaPlus, FaCog, FaTrashAlt } from 'react-icons/fa'
 import { BoardDTO } from '../../Dto/BoardDTO'
-import { TaskStatusDTO } from '../../Dto/TaskStatusDTO'
+import { BoardStatusDTO } from '../../Dto/BoardStatusDTO'
 import './BoardComponent.css'
+import ConfirmDeleteModal from '../../pages/modals/core/ConfirmDeleteModal/ConfirmDeleteModal'
+import { deleteBoard } from '../../services/BoardsService'
 
-export function BoardComponent({ board }: { board: BoardDTO | null }) {
+export function BoardComponent({ board, setBoardDeleted }: { board: BoardDTO | null, setBoardDeleted: (board: BoardDTO) => void }) {
 
     const [taskDeleted, setTaskDeleted] = useState<TaskDTO | null>(null);
-    const [status, setStatus] = useState<TaskStatusDTO[]>([]);
+    const [status, setStatus] = useState<BoardStatusDTO[]>([]);
     const [tasks, setTasks] = useState<TaskDTO[]>([]);
     const [taskCreated, setTaskCreated] = useState<TaskDTO | null>(null);
     const [taskCreationModalIsOpen, setTaskCreationModalIsOpen] = useState(false);
-    const [selectedStatus, setSelectedStatus] = useState<TaskStatusDTO | null>(null);
+    const [selectedStatus, setSelectedStatus] = useState<BoardStatusDTO | null>(null);
+    const [boardStatusModalIsOpen, setBoardStatusModalIsOpen] = useState(false);
+    const [confirmDeleteModalIsOpen, setConfirmDeleteModalIsOpen] = useState(false);
 
     useEffect(() => {
         const fetchStatus = async () => {
-            setStatus(await getStatus())
+            setStatus(await getBoardStatus(board?.id as number))
         }
 
         fetchStatus();
-    }, [])
+    }, [board?.id])
 
     useEffect(() => { 
         const fetchTasks = async () => {
@@ -41,14 +45,37 @@ export function BoardComponent({ board }: { board: BoardDTO | null }) {
         setTaskDeleted(task)
     }
 
-    const handleTaskCreation = (status: TaskStatusDTO) => {
+    const handleTaskCreation = (status: BoardStatusDTO) => {
         setSelectedStatus(status)
         setTaskCreationModalIsOpen(true)
     }
 
+    const handleDeleteBoard = async () => {
+        await deleteBoard(board!)
+        setBoardDeleted(board!)
+    }
+
     return (
         <Container className='board-container'>
-            <h2>{board?.name}</h2>
+            <div className='board-header'>
+                <h2>{board?.name}</h2>
+                <div className='board-header-buttons'>
+                    <Button variant='contained' onClick={() => setBoardStatusModalIsOpen(true)}>
+                        <FaCog />
+                    </Button>
+                    <Button variant='contained' color='error' onClick={() => setConfirmDeleteModalIsOpen(true)}>
+                        <FaTrashAlt />
+                    </Button>
+                </div>
+            </div>
+            {
+                confirmDeleteModalIsOpen 
+                && 
+                <ConfirmDeleteModal 
+                    onClose={() => setConfirmDeleteModalIsOpen(false)}
+                    onConfirm={() => handleDeleteBoard()}
+                />
+            }
             {
                 status.length > 0 ?
                 <Grid2 container spacing={2} className='kanban-board'>
