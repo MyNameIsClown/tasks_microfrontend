@@ -3,26 +3,23 @@ import { useEffect, useState } from "react";
 import { FormControl, Select, MenuItem, InputLabel } from "@mui/material";
 import { BoardDTO } from "../../Dto/BoardDTO";
 import { getBoards } from "../../services/BoardsService";
-import { Button } from "@mui/material";
-import { BoardCreationModal } from "../../pages/modals/BoardCreationModal";
 
 export const BoardSelector = ({ 
     handleBoardChange, 
-    selectedBoard, // Nueva prop
+    selectedBoard,
     fullWidth, 
     margin, 
     required,
-    boardDeleted
+    isBoardsUpdated
 }: { 
     handleBoardChange: (board: BoardDTO | null) => void, 
     selectedBoard: BoardDTO | null,
     fullWidth?: boolean, 
     margin?: "none" | "dense" | "normal", 
     required?: boolean,
-    boardDeleted: BoardDTO | null
+    isBoardsUpdated: boolean
 }) => {
     const [boards, setBoards] = useState<BoardDTO[]>([]);
-    const [boardCreationModalIsOpen, setBoardCreationModalIsOpen] = useState(false);
 
 
     useEffect(() => {
@@ -31,17 +28,13 @@ export const BoardSelector = ({
         };
 
         fetchBoards();
-    }, [boardDeleted]);
+    }, [isBoardsUpdated, selectedBoard]);
 
     const handleBoardSelect = (event: any) => {
         const board = boards.find((board) => board.id === event.target.value)
         if (board) {
             handleBoardChange(board)
         }
-    }
-
-    const openBoardCreationModal = () => {
-        setBoardCreationModalIsOpen(true)
     }
 
     return (
@@ -57,8 +50,6 @@ export const BoardSelector = ({
                     <MenuItem key={board.id} value={board.id}>{board.name}</MenuItem>
                 ))}
             </Select>
-            <Button onClick={() => openBoardCreationModal()}>Crear tablero</Button>
-            {boardCreationModalIsOpen && <BoardCreationModal onClose={() => setBoardCreationModalIsOpen(false)} setBoardCreated={(board) => setBoards([...boards, board])} />}
         </FormControl>
     )
 }

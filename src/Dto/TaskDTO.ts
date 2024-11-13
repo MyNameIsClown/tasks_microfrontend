@@ -1,25 +1,25 @@
 class TaskDTO {
   id: number;
-  titulo: string;
-  descripcion: string;
-  estado: number; 
-  fechaCreacion: Date;
-  fechaActualizacion: Date;
+  name: string;
+  description: string;
+  status: number; 
+  created_at: Date;
+  updated_at: Date;
 
   constructor(
     id: number,
-    titulo: string,
-    descripcion: string,
-    estado: number,
-    fechaCreacion: Date,
-    fechaActualizacion: Date
+    name: string,
+    description: string,
+    status: number,
+    created_at: Date,
+    updated_at: Date
   ) {
     this.id = id;
-    this.titulo = titulo;
-    this.descripcion = descripcion;
-    this.estado = estado;
-    this.fechaCreacion = fechaCreacion;
-    this.fechaActualizacion = fechaActualizacion;
+    this.name = name;
+    this.description = description;
+    this.status = status;
+    this.created_at = created_at;
+    this.updated_at = updated_at;
   }
 }
 

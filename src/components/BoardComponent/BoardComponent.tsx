@@ -13,7 +13,7 @@ import ConfirmDeleteModal from '../../pages/modals/core/ConfirmDeleteModal/Confi
 import { deleteBoard } from '../../services/BoardsService'
 import { BoardConfigModal } from '../../pages/modals/BoardConfigModal/BoardConfigModal'
 
-export function BoardComponent({ board, setBoardDeleted }: { board: BoardDTO | null, setBoardDeleted: (board: BoardDTO) => void }) {
+export function BoardComponent({ board, setBoardDeleted, handleBoardChange }: { board: BoardDTO | null, setBoardDeleted: (board: BoardDTO) => void, handleBoardChange: (board: BoardDTO) => void }) {
 
     const [taskDeleted, setTaskDeleted] = useState<TaskDTO | null>(null);
     const [status, setStatus] = useState<BoardStatusDTO[]>([]);
@@ -97,7 +97,7 @@ export function BoardComponent({ board, setBoardDeleted }: { board: BoardDTO | n
                                 </Button>
                             </div>
                             <hr />
-                            {tasks.filter((task : TaskDTO) => task.estado === status.id).map((task) => (
+                            {tasks.filter((task : TaskDTO) => task.status === status.id).map((task) => (
                                 <TaskCardComponent key={task.id} task={task} handleDelete={() => handleDelete(task)} />
                             ))}
                         </Grid2>

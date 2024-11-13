@@ -4,7 +4,7 @@ import { TaskDTO } from '../Dto/TaskDTO'
 export const getTasks = async (boardId: number) => {
     const response = await axiosInstance.get(`/tasks`, {params: {board: boardId}})
     const fetchedTasks = response.data.map((task: any) => 
-        new TaskDTO(task.id, task.title, task.description, task.status, new Date(task.created_at), new Date(task.updated_at))
+        new TaskDTO(task.id, task.name, task.description, task.status, new Date(task.created_at), new Date(task.updated_at))
     );
     return fetchedTasks
 }
@@ -21,7 +21,7 @@ export const createTask = async (titulo: string, descripcion: string, estado: nu
     const data = response.data
     const task = new TaskDTO(
         data.id, 
-        data.title, 
+        data.name, 
         data.description, 
         data.status, 
         new Date(data.created_at), 

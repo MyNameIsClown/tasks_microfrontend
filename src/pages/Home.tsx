@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { TasksStatusModal } from './modals/TasksStatusModal'
 import { BoardComponent } from '../components/BoardComponent/BoardComponent'
 import { Button, Container} from '@mui/material'
@@ -6,14 +6,21 @@ import { FaGear} from "react-icons/fa6";
 import './Home.css'; 
 import { BoardDTO } from '../Dto/BoardDTO';
 import { BoardSelector } from '../components/selectors/BoardSelector';
+import { BoardCreationModal } from './modals/BoardCreationModal';
 
 function Home() {
     // Inicializar con null explícitamente
     const [selectedBoard, setSelectedBoard] = useState<BoardDTO | null>(null);
     const [statusModalIsOpen, setStatusModalIsOpen] = useState(false);
     const [boardDeleted, setBoardDeleted] = useState<BoardDTO | null>(null);
+    const [boardCreationModalIsOpen, setBoardCreationModalIsOpen] = useState(false);
+    const [isBoardsUpdates, setIsBoardsUpdates] = useState(false);
     
     // Asegurarse de que handleBoardChange siempre reciba un valor definido
+    useEffect(() => {
+        handleBoardChange(null)
+    }, [isBoardsUpdates])
+
     const handleBoardChange = (board: BoardDTO | null) => {
         setSelectedBoard(board);
     };
@@ -21,6 +28,11 @@ function Home() {
     const handleBoardDelete = (board: BoardDTO) => {
         setBoardDeleted(board)
         setSelectedBoard(null)
+        setIsBoardsUpdates(!isBoardsUpdates)
+    }
+
+    const openBoardCreationModal = () => {
+        setBoardCreationModalIsOpen(true)
     }
 
     return (
@@ -35,9 +47,11 @@ function Home() {
             <BoardSelector 
                 handleBoardChange={handleBoardChange}
                 selectedBoard={selectedBoard} // Pasar el valor seleccionado actual
-                boardDeleted={boardDeleted}
+                isBoardsUpdated={isBoardsUpdates}
             />
-            { selectedBoard && <BoardComponent board={selectedBoard} setBoardDeleted={handleBoardDelete}/> }
+            <Button onClick={() => openBoardCreationModal()}>Crear tablero</Button>
+            { boardCreationModalIsOpen && <BoardCreationModal onClose={() => setBoardCreationModalIsOpen(false)} setIsBoardsUpdates={() => setIsBoardsUpdates(!isBoardsUpdates)} handleBoardChange={handleBoardChange}/>}
+            { selectedBoard && <BoardComponent board={selectedBoard} setBoardDeleted={handleBoardDelete} handleBoardChange={handleBoardChange}/> }
             { statusModalIsOpen && <TasksStatusModal onClose={() => setStatusModalIsOpen(false)} />}
         </Container>
     )

@@ -3,7 +3,7 @@ import { Button, TextField} from "@mui/material";
 import { BoardDTO } from "../../Dto/BoardDTO";
 import { createBoard } from "../../services/BoardsService";
 
-export const BoardCreationModal = ({ onClose, setBoardCreated }: { onClose: () => void, setBoardCreated: (board: BoardDTO) => void }) => {
+export const BoardCreationModal = ({ onClose, setIsBoardsUpdates, handleBoardChange }: { onClose: () => void, setIsBoardsUpdates: (isUpdated: boolean) => void, handleBoardChange: (board: BoardDTO | null) => void }) => {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -12,8 +12,8 @@ export const BoardCreationModal = ({ onClose, setBoardCreated }: { onClose: () =
             formData.get('title') as string,
             formData.get('description') as string
         )
-        console.log(board)
-        setBoardCreated(board)
+        handleBoardChange(board)
+        setIsBoardsUpdates
         onClose()
     }
 
