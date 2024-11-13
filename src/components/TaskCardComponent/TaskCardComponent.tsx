@@ -16,7 +16,7 @@ function TaskCardComponent({task, handleDelete}: {task: TaskDTO, handleDelete: (
         <CardContent className="task-card-content">
           <h1 className="task-title">{task.name}</h1>
           <TextField label="Descripción" value={task.description} disabled={true} fullWidth={true} multiline rows={4}/>
-          <Button 
+          {/* <Button 
             onClick={handleDelete} 
             className="delete-button"
             color='error'
@@ -24,7 +24,7 @@ function TaskCardComponent({task, handleDelete}: {task: TaskDTO, handleDelete: (
           >
               Delete Task
               <FaTrashAlt />
-          </Button>
+          </Button> */}
         </CardContent>
     </Card>
   )
