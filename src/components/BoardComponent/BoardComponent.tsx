@@ -2,7 +2,7 @@ import { TaskCardComponent } from '../TaskCardComponent/TaskCardComponent'
 import { TasksCreationModal } from '../../pages/modals/TasksCreationModal'
 import { TaskDTO } from '../../Dto/TaskDTO'
 import { useState, useEffect } from 'react'
-import { getTasks, deleteTask } from '../../services/TasksService'
+import { getTasks, deleteTask, updateTask } from '../../services/TasksService'
 import { getBoardStatus } from '../../services/BoardStatusService'
 import { Container, Grid2, Button } from '@mui/material'
 import { FaPlus, FaCog, FaTrashAlt } from 'react-icons/fa'
@@ -12,30 +12,18 @@ import './BoardComponent.css'
 import ConfirmDeleteModal from '../../pages/modals/core/ConfirmDeleteModal/ConfirmDeleteModal'
 import { deleteBoard } from '../../services/BoardsService'
 import { BoardConfigModal } from '../../pages/modals/BoardConfigModal/BoardConfigModal'
-import { DndContext, useDroppable, useDraggable } from '@dnd-kit/core'
 
 export function BoardComponent({ board, setBoardDeleted, handleBoardChange }: { board: BoardDTO | null, setBoardDeleted: (board: BoardDTO) => void, handleBoardChange: (board: BoardDTO) => void }) {
 
     const [taskDeleted, setTaskDeleted] = useState<TaskDTO | null>(null);
+    const [taskCreated, setTaskCreated] = useState<TaskDTO | null>(null);
+    const [taskUpdated, setTaskUpdated] = useState<TaskDTO | null>(null);
     const [status, setStatus] = useState<BoardStatusDTO[]>([]);
     const [tasks, setTasks] = useState<TaskDTO[]>([]);
-    const [taskCreated, setTaskCreated] = useState<TaskDTO | null>(null);
     const [taskCreationModalIsOpen, setTaskCreationModalIsOpen] = useState(false);
     const [selectedStatus, setSelectedStatus] = useState<BoardStatusDTO | null>(null);
     const [boardStatusModalIsOpen, setBoardStatusModalIsOpen] = useState(false);
     const [confirmDeleteModalIsOpen, setConfirmDeleteModalIsOpen] = useState(false);
-
-    const {isOver, setNodeRef: setDroppableNodeRef} = useDroppable({
-        id: 'status_column',
-    })
-
-    const {attributes, listeners, setNodeRef: setDraggableNodeRef, transform} = useDraggable({
-        id: 'tasks',
-    });
-
-    const draggableStyle = transform ? {
-        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-    } : undefined;
 
     useEffect(() => {
         const fetchStatus = async () => {
@@ -51,10 +39,9 @@ export function BoardComponent({ board, setBoardDeleted, handleBoardChange }: { 
         };
 
         fetchTasks();
-    }, [taskDeleted, taskCreated, board?.id]);
+    }, [taskDeleted, taskCreated, taskUpdated, board?.id]);
     
     const handleDelete = async (task: TaskDTO) => {
-        console.log(task)
         await deleteTask(task)
         setTaskDeleted(task)
     }
@@ -67,6 +54,19 @@ export function BoardComponent({ board, setBoardDeleted, handleBoardChange }: { 
     const handleDeleteBoard = async () => {
         await deleteBoard(board!)
         setBoardDeleted(board!)
+    }
+    
+    const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault()
+    }
+
+    const handleDrop = async (e: React.DragEvent<HTMLDivElement>, status: BoardStatusDTO) => {
+        const draggedTaskId = e.dataTransfer.getData("dragged_task_id")
+        const task = tasks.find((task) => task.id === parseInt(draggedTaskId))
+        const updatedTask = await updateTask(
+            new TaskDTO(task!.id, task!.name, task!.description, status.id, task!.board, task!.created_at, task!.updated_at)
+        )
+        setTaskUpdated(updatedTask)
     }
 
     return (
@@ -101,26 +101,22 @@ export function BoardComponent({ board, setBoardDeleted, handleBoardChange }: { 
             {/* Drag and drop tasks on Kanban board by statuses */}
             {
                 status.length > 0 ?
-                <DndContext>
-                    <Grid2 container spacing={2} className='kanban-board'>
-                        {status.map((status) => (
-                            <Grid2 key={status.id} className='kanban-column' size="grow" ref={setDroppableNodeRef} style={{border: isOver ? '2px solid #000' : '1px solid #000'}}>
-                                <div className='kanban-column-header'>
-                                    <div>{status.titulo}</div>
-                                    <Button variant="contained" onClick={() => handleTaskCreation(status)}>
-                                        <FaPlus />
-                                    </Button>
-                                </div>
-                                <hr />
-                                {tasks.filter((task : TaskDTO) => task.status === status.id).map((task) => (
-                                    <button key={task.id} ref={setDraggableNodeRef} style={draggableStyle} {...listeners} {...attributes}>
-                                        <TaskCardComponent key={task.id} task={task} handleDelete={() => handleDelete(task)} />
-                                    </button>
-                                ))}
-                            </Grid2>
-                        ))}
-                    </Grid2>
-                </DndContext>
+                <Grid2 container spacing={2} className='kanban-board'>
+                    {status.map((status) => (
+                        <Grid2 key={status.id} className='kanban-column' size="grow" component="div" onDragOver={(e: React.DragEvent<HTMLDivElement>) => handleDragOver(e)} onDrop={(e: React.DragEvent<HTMLDivElement>) => handleDrop(e, status)}>
+                            <div className='kanban-column-header'>
+                                <div>{status.titulo}</div>
+                                <Button variant="contained" onClick={() => handleTaskCreation(status)}>
+                                    <FaPlus />
+                                </Button>
+                            </div>
+                            <hr />
+                            {tasks.filter((task : TaskDTO) => task.status === status.id).map((task) => (
+                                <TaskCardComponent key={task.id} task={task} handleDelete={() => handleDelete(task)} />
+                            ))}
+                        </Grid2>
+                    ))}
+                </Grid2>
                 :
                 <div>No statuses</div>
             }

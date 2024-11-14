@@ -7,12 +7,13 @@ import './TaskCardComponent.css';
 import { useEffect } from 'react';
 
 function TaskCardComponent({task, handleDelete}: {task: TaskDTO, handleDelete: () => void}) {
-  useEffect(() => {
-    console.log(task)
-  }, [task])
+
+  const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+    e.dataTransfer.setData("dragged_task_id", task.id.toString())
+  }
 
   return (
-    <Card className="task-card">
+    <Card className="task-card" draggable="true" onDragStart={(e) => handleDragStart(e)}>
         <CardContent className="task-card-content">
           <h1 className="task-title">{task.name}</h1>
           <TextField label="Descripción" value={task.description} disabled={true} fullWidth={true} multiline rows={4}/>

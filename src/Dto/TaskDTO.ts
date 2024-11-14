@@ -3,6 +3,7 @@ class TaskDTO {
   name: string;
   description: string;
   status: number; 
+  board: number;
   created_at: Date;
   updated_at: Date;
 
@@ -11,6 +12,7 @@ class TaskDTO {
     name: string,
     description: string,
     status: number,
+    board: number,
     created_at: Date,
     updated_at: Date
   ) {
@@ -18,8 +20,10 @@ class TaskDTO {
     this.name = name;
     this.description = description;
     this.status = status;
+    this.board = board;
     this.created_at = created_at;
     this.updated_at = updated_at;
+
   }
 }
 
