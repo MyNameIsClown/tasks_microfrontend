@@ -1,5 +1,5 @@
 // import { TaskDTO } from "../../Dto/TaskDTO";
-import { TaskStatusDTO } from "../../Dto/BoardStatusDTO";
+import { TaskStatusDTO } from "../../Dto/StatusDTO";
 import { getStatus } from "../../services/BoardStatusService";
 import { useEffect, useState } from "react";
 import { FormControl, Select, MenuItem, InputLabel } from "@mui/material";

@@ -7,7 +7,7 @@ import { getBoardStatus } from '../../services/BoardStatusService'
 import { Container, Grid2, Button } from '@mui/material'
 import { FaPlus, FaCog, FaTrashAlt } from 'react-icons/fa'
 import { BoardDTO } from '../../Dto/BoardDTO'
-import { BoardStatusDTO } from '../../Dto/BoardStatusDTO'
+import { StatusDTO } from '../../Dto/StatusDTO'
 import './BoardComponent.css'
 import ConfirmDeleteModal from '../../pages/modals/core/ConfirmDeleteModal/ConfirmDeleteModal'
 import { deleteBoard } from '../../services/BoardsService'
@@ -18,10 +18,10 @@ export function BoardComponent({ board, setBoardDeleted, handleBoardChange }: { 
     const [taskDeleted, setTaskDeleted] = useState<TaskDTO | null>(null);
     const [taskCreated, setTaskCreated] = useState<TaskDTO | null>(null);
     const [taskUpdated, setTaskUpdated] = useState<TaskDTO | null>(null);
-    const [status, setStatus] = useState<BoardStatusDTO[]>([]);
+    const [status, setStatus] = useState<StatusDTO[]>([]);
     const [tasks, setTasks] = useState<TaskDTO[]>([]);
     const [taskCreationModalIsOpen, setTaskCreationModalIsOpen] = useState(false);
-    const [selectedStatus, setSelectedStatus] = useState<BoardStatusDTO | null>(null);
+    const [selectedStatus, setSelectedStatus] = useState<StatusDTO | null>(null);
     const [boardStatusModalIsOpen, setBoardStatusModalIsOpen] = useState(false);
     const [confirmDeleteModalIsOpen, setConfirmDeleteModalIsOpen] = useState(false);
 
@@ -46,7 +46,7 @@ export function BoardComponent({ board, setBoardDeleted, handleBoardChange }: { 
         setTaskDeleted(task)
     }
 
-    const handleTaskCreation = (status: BoardStatusDTO) => {
+    const handleTaskCreation = (status: StatusDTO) => {
         setSelectedStatus(status)
         setTaskCreationModalIsOpen(true)
     }
@@ -60,7 +60,7 @@ export function BoardComponent({ board, setBoardDeleted, handleBoardChange }: { 
         e.preventDefault()
     }
 
-    const handleDrop = async (e: React.DragEvent<HTMLDivElement>, status: BoardStatusDTO) => {
+    const handleDrop = async (e: React.DragEvent<HTMLDivElement>, status: StatusDTO) => {
         const draggedTaskId = e.dataTransfer.getData("dragged_task_id")
         const task = tasks.find((task) => task.id === parseInt(draggedTaskId))
         const updatedTask = await updateTask(

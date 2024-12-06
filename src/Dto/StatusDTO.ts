@@ -1,23 +1,20 @@
-class BoardStatusDTO {
+class StatusDTO {
   id: number;
-  titulo: string;
-  descripcion: string;
+  name: string;
   fechaCreacion: Date;
   fechaActualizacion: Date;
 
   constructor(
     id: number,
-    titulo: string,
-    descripcion: string,
+    name: string,
     fechaCreacion: Date,
     fechaActualizacion: Date
   ) {
     this.id = id;
-    this.titulo = titulo;
-    this.descripcion = descripcion;
+    this.name = name;
     this.fechaCreacion = fechaCreacion;
     this.fechaActualizacion = fechaActualizacion;
   }
 }
 
-export { BoardStatusDTO };
+export { StatusDTO as StatusDTO };

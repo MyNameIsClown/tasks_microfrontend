@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { TasksStatusModal } from './modals/TasksStatusModal'
+import { StatusModal } from './modals/StatusModal'
 import { BoardComponent } from '../components/BoardComponent/BoardComponent'
 import { Button, Container} from '@mui/material'
 import { FaGear} from "react-icons/fa6";
@@ -52,7 +52,7 @@ function Home() {
             <Button onClick={() => openBoardCreationModal()}>Crear tablero</Button>
             { boardCreationModalIsOpen && <BoardCreationModal onClose={() => setBoardCreationModalIsOpen(false)} setIsBoardsUpdates={() => setIsBoardsUpdates(!isBoardsUpdates)} handleBoardChange={handleBoardChange}/>}
             { selectedBoard && <BoardComponent board={selectedBoard} setBoardDeleted={handleBoardDelete} handleBoardChange={handleBoardChange}/> }
-            { statusModalIsOpen && <TasksStatusModal onClose={() => setStatusModalIsOpen(false)} />}
+            { statusModalIsOpen && <StatusModal onClose={() => setStatusModalIsOpen(false)} />}
         </Container>
     )
 }

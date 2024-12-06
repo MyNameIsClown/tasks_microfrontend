@@ -1,23 +1,34 @@
-.modal-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
 .modal-content {
     background-color: white;
-    margin: 10% auto;
-    padding: 20px;
-    width: 50%;
-    height: 50%;
+    padding: 0; /* Sin padding general */
+    width: 50%; /* Ancho del modal */
+    min-height: 20%;
+    max-height: 80%; /* Nuevo tamaño de altura */
     border-radius: 10px;
+    display: flex;
+    flex-direction: column; /* Estructura interna en columnas */
+    overflow: hidden; /* Para controlar el scroll del contenido */
+    position: relative; /* Necesario para los hijos relativos */
 }
 
 .modal-header {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between; /* Separar título y botón */
+    align-items: center; /* Alinear verticalmente los elementos */
+    padding: 10px 20px;
+    background-color: #f5f5f5; /* Color de fondo */
+    border-bottom: 1px solid #ddd; /* Línea divisoria */
+    z-index: 1; /* Mantener el encabezado encima del contenido */
 }
 
+.modal-body {
+    flex: 1; /* Hacer que el cuerpo ocupe el espacio restante */
+    overflow-y: auto; /* Habilitar desplazamiento vertical */
+    padding: 20px; /* Espaciado del contenido */
+}
+
+.MuiModal-root {
+    display: flex; /* Flexbox para el modal */
+    align-items: center; /* Centrado vertical */
+    justify-content: center; /* Centrado horizontal */
+}

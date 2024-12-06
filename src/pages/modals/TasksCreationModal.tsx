@@ -2,7 +2,7 @@ import { TaskDTO } from "../../Dto/TaskDTO";
 import { createTask } from "../../services/TasksService";
 import { ModalCore } from './core/ModalCore';
 import { Button, TextField} from "@mui/material";
-import { BoardStatusDTO } from "../../Dto/BoardStatusDTO";
+import { StatusDTO } from "../../Dto/StatusDTO";
 
 export const TasksCreationModal = (
     { 
@@ -15,7 +15,7 @@ export const TasksCreationModal = (
         onClose: () => void, 
         setTaskCreated: (task: TaskDTO) => void, 
         boardId: number, 
-        status: BoardStatusDTO 
+        status: StatusDTO 
     }
 ) => {
 

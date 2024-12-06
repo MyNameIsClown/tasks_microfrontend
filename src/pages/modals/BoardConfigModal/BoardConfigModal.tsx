@@ -3,11 +3,11 @@ import { BoardDTO } from "../../../Dto/BoardDTO"
 import { TextField, Button, Container } from "@mui/material"
 import { useEffect, useState } from "react"
 import { getBoardStatus } from "../../../services/BoardStatusService"
-import { BoardStatusDTO } from "../../../Dto/BoardStatusDTO"
+import { StatusDTO } from "../../../Dto/StatusDTO"
 
 const BoardConfigModal = ({ onClose, board }: { onClose: () => void, board: BoardDTO }) => {
     
-    const [boardStatus, setBoardStatus] = useState<BoardStatusDTO[]>([])
+    const [boardStatus, setBoardStatus] = useState<StatusDTO[]>([])
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
