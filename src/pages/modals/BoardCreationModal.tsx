@@ -1,4 +1,4 @@
-import { ModalCore } from './core/ModalCore';
+import { ModalCore } from './core/ModalCore/ModalCore';
 import { Button, TextField} from "@mui/material";
 import { BoardDTO } from "../../Dto/BoardDTO";
 import { createBoard } from "../../services/BoardsService";

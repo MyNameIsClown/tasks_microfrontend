@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { StatusModal } from './modals/StatusModal'
+import { StatusModal } from './modals/StatusModal/StatusModal'
 import { BoardComponent } from '../components/BoardComponent/BoardComponent'
 import { Button, Container} from '@mui/material'
 import { FaGear} from "react-icons/fa6";

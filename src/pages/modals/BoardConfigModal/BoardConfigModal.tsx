@@ -1,4 +1,4 @@
-import { ModalCore } from "../core/ModalCore"
+import { ModalCore } from "../core/ModalCore/ModalCore"
 import { BoardDTO } from "../../../Dto/BoardDTO"
 import { TextField, Button, Container } from "@mui/material"
 import { useEffect, useState } from "react"

@@ -1,6 +1,6 @@
 import { TaskDTO } from "../../Dto/TaskDTO";
 import { createTask } from "../../services/TasksService";
-import { ModalCore } from './core/ModalCore';
+import { ModalCore } from './core/ModalCore/ModalCore';
 import { Button, TextField} from "@mui/material";
 import { StatusDTO } from "../../Dto/StatusDTO";
 

@@ -22,7 +22,7 @@
 }
 
 .modal-body {
-    flex: 1; /* Hacer que el cuerpo ocupe el espacio restante */
+    flex: 1;
     overflow-y: auto; /* Habilitar desplazamiento vertical */
     padding: 20px; /* Espaciado del contenido */
 }

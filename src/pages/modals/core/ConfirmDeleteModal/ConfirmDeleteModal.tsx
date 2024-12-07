@@ -1,4 +1,4 @@
-import { ModalCore } from "../ModalCore";
+import { ModalCore } from "../ModalCore/ModalCore";
 import { Button } from "@mui/material";
 
 const ConfirmDeleteModal = ({ onClose, onConfirm }: { onClose: () => void, onConfirm: () => void }) => {

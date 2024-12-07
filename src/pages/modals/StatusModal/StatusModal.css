@@ -1,0 +1,11 @@
+.status-item{
+    display: flex;
+    justify-content: space-between;
+}
+.status-item-buttons{
+    margin-left: 20px;
+    display: flex; /* Habilita Flexbox */
+    justify-content: center; /* Centra verticalmente los botones */
+    align-items: center; /* Centra horizontalmente los botones */
+    gap: 10px; /* Espaciado entre los botones */
+}
