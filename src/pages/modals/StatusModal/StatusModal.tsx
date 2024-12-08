@@ -2,14 +2,17 @@ import "./StatusModal.css"
 import { useState, useEffect} from 'react';
 
 import { ModalCore } from '../core/ModalCore/ModalCore';
+import ConfirmDeleteModal from "../core/ConfirmDeleteModal/ConfirmDeleteModal";
 import { TextField, Button } from '@mui/material';
-import { createStatus, getAllStatus } from '../../../services/StatusService';
+import { createStatus, getAllStatus, deleteStatus } from '../../../services/StatusService';
 import { StatusDTO } from '../../../Dto/StatusDTO';
 import { FaTrashAlt, FaPen } from "react-icons/fa";
 
 
 export const StatusModal = ({ onClose }: { onClose: () => void }) => {
     const [status, setStatus] = useState<StatusDTO[] | null>(null)
+    const [confirmDeleteModalIsOpen, setConfirmDeleteModalIsOpen] = useState<boolean>(false)
+    const [statusIdToDelete, setStatusIdToDelete] = useState<Number | null>(null)
 
     useEffect(() => {
         const fetchStatus = async () => {
@@ -29,11 +32,17 @@ export const StatusModal = ({ onClose }: { onClose: () => void }) => {
         setStatus(status)
     }
 
+    const handleDelete = async () => {
+        console.log("Eliminando")
+    }
+
     const activateEditionMode = () =>{
         console.log("Activando el modo edición")
     }
-    const openDeleteModal = () => {
-        console.log("Abriendo modal de confirmacion elimiancion de estados")
+    const openDeleteModal = (id: number) => {
+        setConfirmDeleteModalIsOpen(true)
+        setStatusIdToDelete(id)
+        console.log(statusIdToDelete)
     }
 
     return (
@@ -42,7 +51,7 @@ export const StatusModal = ({ onClose }: { onClose: () => void }) => {
             <div className='status_data'>
                 <div className='status_list'>
                     {status?.map((state) =>(
-                        <div className='status-item'>
+                        <div className='status-item' id={state.id.toString()}>
                             <TextField
                                 fullWidth
                                 value={state.name}
@@ -59,7 +68,7 @@ export const StatusModal = ({ onClose }: { onClose: () => void }) => {
                                 <Button
                                     variant="contained"
                                     color="error"
-                                    onClick={openDeleteModal}
+                                    onClick={openDeleteModal(1)}
                                 >
                                     <FaTrashAlt/>
                                 </Button>
@@ -78,6 +87,7 @@ export const StatusModal = ({ onClose }: { onClose: () => void }) => {
                     <Button type="submit" variant="contained" color="primary">Create</Button>
                 </form>
             </div>
+            {confirmDeleteModalIsOpen && <ConfirmDeleteModal  onClose={()=>{setConfirmDeleteModalIsOpen(false)}} onConfirm={handleDelete}/>}
         </ModalCore>
     )
 }
